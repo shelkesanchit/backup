@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Institute Login - Handout to Needy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style2.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="logo">
+                <a href="../index.html">
+                    <img src="../assets/images/logo.jpg" alt="Handout to Needy Logo">
+                    <span>Handout to Needy</span>
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../about.html">About</a></li>
+                <li><a href="../contact.html">Contact</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle active">Login <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="institute-login.html" class="active">Institute Login</a></li>
+                        <li><a href="donor-login.html">Donor Login</a></li>
+                        <li><a href="supplier-login.html">Supplier Login</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Register <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="institute-register.html">Institute Registration</a></li>
+                        <li><a href="donor-register.html">Donor Registration</a></li>
+                        <li><a href="supplier-register.html">Supplier Registration</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+        </nav>
+    </header>
+
+    <section class="auth-section">
+        <div class="container">
+            <div class="auth-container">
+                <div class="auth-info">
+                    <h2>Welcome Back to Handout to Needy</h2>
+                    <p>Login to your institute account to manage your requests, track donations, and connect with suppliers and donors.</p>
+                    <div class="auth-features">
+                        <div class="auth-feature">
+                            <i class="fas fa-clipboard-list"></i>
+                            <span>Create and manage resource requests</span>
+                        </div>
+                        <div class="auth-feature">
+                            <i class="fas fa-chart-bar"></i>
+                            <span>Track donation progress and history</span>
+                        </div>
+                        <div class="auth-feature">
+                            <i class="fas fa-truck-loading"></i>
+                            <span>Coordinate with suppliers for deliveries</span>
+                        </div>
+                    </div>
+                    <p class="auth-redirect">Don't have an account? <a href="institute-register.html">Register as an Institute</a></p>
+                </div>
+                <div class="auth-form">
+                    <div class="form-header">
+                        <h3>Institute Login</h3>
+                    </div>
+                    <form id="institute-login-form">
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <div class="input-icon">
+                                <i class="fas fa-envelope"></i>
+                                <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <div class="input-icon">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password" required minlength="8">
+                                <i class="fas fa-eye toggle-password"></i>
+                            </div>
+                        </div>
+                        <div class="form-group remember-forgot">
+                            <div class="remember-me">
+                                <input type="checkbox" id="remember" name="remember">
+                                <label for="remember">Remember me</label>
+                            </div>
+                            <a href="#" class="forgot-password" data-modal="reset-password-modal">Forgot Password?</a>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-block">Login</button>
+                        </div>
+                        <div id="login-error" class="error-message" style="display: none; color: red; text-align: center; margin-top: 10px;"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Password Reset Modal -->
+    <div id="reset-password-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Reset Your Password</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Enter your email address, and we'll send you a link to reset your password.</p>
+                <form id="reset-password-form">
+                    <div class="form-group">
+                        <label for="reset-email">Email Address</label>
+                        <div class="input-icon">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="reset-email" name="reset-email" class="form-control" placeholder="Enter your email" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-block">Send Reset Link</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="../assets/images/logo.jpg" alt="Handout to Needy Logo">
+                    <p>Handout to Needy</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="../about.html">About Us</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                        <li><a href="donor-login.html">Donor Login</a></li>
+                        <li><a href="institute-login.html">Institute Login</a></li>
+                        <li><a href="supplier-login.html">Supplier Login</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-envelope"></i> support@handoutoneedy.org</p>
+                    <p><i class="fas fa-phone"></i> +91 1234567890</p>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Charity Lane, Bangalore, India</p>
+                </div>
+                <div class="footer-social">
+                    <h3>Follow Us</h3>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Handout to Needy. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Toggle password visibility
+            const togglePassword = document.querySelector('.toggle-password');
+            if (togglePassword) {
+                togglePassword.addEventListener('click', function() {
+                    const passwordInput = document.getElementById('password');
+                    if (passwordInput.type === 'password') {
+                        passwordInput.type = 'text';
+                        this.classList.remove('fa-eye');
+                        this.classList.add('fa-eye-slash');
+                    } else {
+                        passwordInput.type = 'password';
+                        this.classList.remove('fa-eye-slash');
+                        this.classList.add('fa-eye');
+                    }
+                });
+            }
+
+            // Login form submission
+            const loginForm = document.getElementById('institute-login-form');
+            if (loginForm) {
+                loginForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const email = document.getElementById('email').value;
+                    const password = document.getElementById('password').value;
+                    const errorMessage = document.getElementById('login-error');
+                    
+                    // Check if credentials match the default ones
+                    if (email === 'sanchit@gmail.com' && password === 'Sms&1234') {
+                        // Store login info in localStorage if remember me is checked
+                        if (document.getElementById('remember').checked) {
+                            localStorage.setItem('institute_email', email);
+                            localStorage.setItem('institute_login', 'true');
+                        }
+                        
+                        // Redirect to institute.html with correct relative path
+                        window.location.href = 'institute/institute.html';
+                    } else {
+                        // Show error message
+                        errorMessage.textContent = 'Invalid email or password. Please try again.';
+                        errorMessage.style.display = 'block';
+                    }
+                });
+            }
+
+            // Password reset modal
+            const forgotPasswordLink = document.querySelector('.forgot-password');
+            const modal = document.getElementById('reset-password-modal');
+            const closeModal = document.querySelector('.modal-close');
+            
+            if (forgotPasswordLink && modal) {
+                forgotPasswordLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    modal.style.display = 'block';
+                });
+            }
+            
+            if (closeModal && modal) {
+                closeModal.addEventListener('click', function() {
+                    modal.style.display = 'none';
+                });
+            }
+            
+            // Close modal when clicking outside
+            window.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+
+            // Password reset form submission
+            const resetForm = document.getElementById('reset-password-form');
+            if (resetForm) {
+                resetForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    alert('Password reset link has been sent to your email address.');
+                    modal.style.display = 'none';
+                });
+            }
+        });
+    </script>
+</body>
+</html>

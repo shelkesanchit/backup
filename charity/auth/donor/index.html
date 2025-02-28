@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Donation Shop</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f4f6f9;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: #3f51b5;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .shop-name {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .shop-type-selector {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .shop-type-btn {
+            padding: 10px 20px;
+            background-color: #e0e0e0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .shop-type-btn:hover {
+            background-color: #c0c0c0;
+        }
+        
+        .shop-type-btn.active {
+            background-color: #ff5722;
+            color: white;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .product-section {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+        
+        .product-inputs {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        input, select {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        button {
+            padding: 10px 15px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #388e3c;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .delete-btn {
+            background-color: #f44336;
+        }
+        
+        .delete-btn:hover {
+            background-color: #d32f2f;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .customer-section {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+        
+        .customer-details {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .form-group label {
+            font-weight: bold;
+        }
+        
+        .total-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+        }
+        
+        .total-amount {
+            font-size: 2rem;
+            color: #f44336;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .payment-qr {
+            margin-top: 20px;
+            text-align: center;
+            display: none;
+        }
+        
+        .action-bar {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            gap: 10px;
+        }
+        
+        .theme-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+        }
+        
+        .toggle-label {
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: 0.4s;
+            border-radius: 34px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: 0.4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+        
+        .date-time {
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            color: #555;
+        }
+        
+        /* Dark Mode Styles */
+        .dark-mode {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+        
+        .dark-mode header {
+            background-color: #333;
+        }
+        
+        .dark-mode .product-section,
+        .dark-mode .customer-section {
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+        }
+        
+        .dark-mode input,
+        .dark-mode select {
+            background-color: #333;
+            color: #e0e0e0;
+            border-color: #444;
+        }
+        
+        .dark-mode table,
+        .dark-mode th,
+        .dark-mode td {
+            border-color: #444;
+        }
+        
+        .dark-mode th {
+            background-color: #333;
+            color: #e0e0e0;
+        }
+        
+        .dark-mode tr:nth-child(even) {
+            background-color: #2a2a2a;
+        }
+        
+        .dark-mode .total-section {
+            background-color: #2a2a2a;
+        }
+        
+        .shipping-btn {
+            background-color: #3f51b5;
+        }
+        
+        .shipping-btn:hover {
+            background-color: #303f9f;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 id="shopName" class="shop-name">Community Donation Shop</h1>
+        <p>Help those in need with essential items</p>
+    </header>
+
+    <div class="container">
+        <div class="theme-toggle">
+            <span class="toggle-label">Dark Mode</span>
+            <label class="toggle-switch">
+                <input type="checkbox" id="themeToggle">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div class="date-time" id="dateTime">
+            <!-- Date and time will be inserted here by JavaScript -->
+        </div>
+
+        <div class="shop-type-selector">
+            <button class="shop-type-btn active" data-shop="grocery">Grocery</button>
+            <button class="shop-type-btn" data-shop="medical">Medical</button>
+            <button class="shop-type-btn" data-shop="clothing">Clothing</button>
+            <button class="shop-type-btn" data-shop="books">Books & Stationery</button>
+            <button class="shop-type-btn" data-shop="essentials">Daily Essentials</button>
+        </div>
+
+        <div class="main-content">
+            <div class="product-section">
+                <h2>Add Items for Donation</h2>
+                <div class="product-inputs">
+                    <input type="text" id="productName" placeholder="Product Name">
+                    <input type="number" id="productPrice" placeholder="Price" min="0" step="0.01">
+                    <input type="number" id="productQuantity" placeholder="Quantity" min="1" value="1">
+                </div>
+                <div class="action-buttons">
+                    <button id="addItem">Add Item</button>
+                    <button id="deleteItem" class="delete-btn">Delete Selected</button>
+                </div>
+
+                <table id="productTable">
+                    <thead>
+                        <tr>
+                            <th>Item Name</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productTableBody">
+                        <!-- Product items will be added here by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="customer-section">
+                <h2>Donor Details</h2>
+                <div class="customer-details">
+                    <div class="form-group">
+                        <label for="customerName">Name</label>
+                        <input type="text" id="customerName" placeholder="Enter your name">
+                    </div>
+                    <div class="form-group">
+                        <label for="customerPhone">Phone</label>
+                        <input type="tel" id="customerPhone" placeholder="Enter your phone number">
+                    </div>
+                    <div class="form-group">
+                        <label for="paymentMode">Payment Mode</label>
+                        <select id="paymentMode">
+                            <option value="upi">UPI Payment</option>
+                            <option value="card">Card Payment</option>
+                            <option value="cash">Cash</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="total-section">
+                    <h3>Total Donation Amount</h3>
+                    <div class="total-amount" id="totalAmount">Rs 0.00</div>
+                </div>
+
+                <div class="payment-qr" id="qrSection">
+                    <h3>Scan to Transfer</h3>
+                    <div id="qrcode"></div>
+                    <p>UPI ID: sanchitshelke6303@okhdfcbank</p>
+                </div>
+
+                <div class="action-bar">
+                    <button id="saveBill">Save Receipt</button>
+                    <button id="printBill">Print Receipt</button>
+                    <button id="newBill">New Donation</button>
+                    <button id="shippingBtn" class="shipping-btn">Ship Items</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script>
+        // Shop types with essential items
+        const shopTypes = {
+            grocery: [
+                { name: "Rice (5kg)", price: 250 },
+                { name: "Wheat Flour (5kg)", price: 200 },
+                { name: "Cooking Oil (1L)", price: 120 },
+                { name: "Pulses Mix (2kg)", price: 180 },
+                { name: "Sugar (1kg)", price: 50 },
+                { name: "Salt (1kg)", price: 20 },
+                { name: "Tea (250g)", price: 60 },
+                { name: "Milk Powder (500g)", price: 180 }
+            ],
+            medical: [
+                { name: "Basic First Aid Kit", price: 300 },
+                { name: "Pain Reliever Pack", price: 100 },
+                { name: "Antiseptic Solution", price: 80 },
+                { name: "Bandages (Pack)", price: 60 },
+                { name: "ORS Packets (Box)", price: 120 },
+                { name: "Multivitamins (Bottle)", price: 150 },
+                { name: "Hand Sanitizer", price: 50 },
+                { name: "Face Masks (Pack of 10)", price: 100 }
+            ],
+            clothing: [
+                { name: "Children's T-Shirt", price: 150 },
+                { name: "Women's Saree", price: 500 },
+                { name: "Men's Shirt", price: 300 },
+                { name: "Winter Blanket", price: 400 },
+                { name: "Children's Shoes", price: 250 },
+                { name: "School Uniform Set", price: 600 },
+                { name: "Baby Clothes Set", price: 350 },
+                { name: "Towels (Pack of 2)", price: 200 }
+            ],
+            books: [
+                { name: "School Notebooks (Pack of 5)", price: 120 },
+                { name: "Pencil & Pen Set", price: 80 },
+                { name: "Basic Mathematics Book", price: 150 },
+                { name: "English Learning Book", price: 180 },
+                { name: "Drawing Book & Colors", price: 200 },
+                { name: "Educational Charts Set", price: 150 },
+                { name: "Story Books for Children", price: 250 },
+                { name: "School Bag", price: 350 }
+            ],
+            essentials: [
+                { name: "Soap Bars (Pack of 5)", price: 150 },
+                { name: "Toothpaste & Brush Set", price: 100 },
+                { name: "Sanitary Pads (Pack)", price: 120 },
+                { name: "Mosquito Net", price: 250 },
+                { name: "Water Purifier Tablets", price: 180 },
+                { name: "LED Flashlight", price: 150 },
+                { name: "Women's Hygiene Kit", price: 300 },
+                { name: "Reusable Water Bottle", price: 120 }
+            ]
+        };
+
+        // Shop names for each type
+        const shopNamesByType = {
+            grocery: ["Community Food Bank", "Helping Hands Grocery", "Care Basket", "Essential Nutrition Center", "Food For All"],
+            medical: ["Health Aid Center", "Care Medical Support", "Wellness Donation Center", "Medical Essentials Hub", "Health For All"],
+            clothing: ["Clothing With Care", "Warm Hearts Apparel", "Dignity Wardrobe", "Community Clothing Bank", "Threads of Hope"],
+            books: ["Knowledge For All", "Learning Corner", "Education Aid Center", "Bright Future Books", "Community Library"],
+            essentials: ["Daily Care Hub", "Basic Essentials Bank", "Life Necessities Center", "Community Support Store", "Essentials For All"]
+        };
+
+        // DOM Elements
+        const shopNameElement = document.getElementById('shopName');
+        const dateTimeElement = document.getElementById('dateTime');
+        const shopTypeButtons = document.querySelectorAll('.shop-type-btn');
+        const productNameInput = document.getElementById('productName');
+        const productPriceInput = document.getElementById('productPrice');
+        const productQuantityInput = document.getElementById('productQuantity');
+        const addItemButton = document.getElementById('addItem');
+        const deleteItemButton = document.getElementById('deleteItem');
+        const productTableBody = document.getElementById('productTableBody');
+        const totalAmountElement = document.getElementById('totalAmount');
+        const saveBillButton = document.getElementById('saveBill');
+        const printBillButton = document.getElementById('printBill');
+        const newBillButton = document.getElementById('newBill');
+        const themeToggle = document.getElementById('themeToggle');
+        const qrSection = document.getElementById('qrSection');
+        const paymentModeSelect = document.getElementById('paymentMode');
+        const shippingButton = document.getElementById('shippingBtn');
+
+        // Current shop type
+        let currentShopType = 'grocery';
+        
+        // Selected row for deletion
+        let selectedRow = null;
+
+        // Initialize QR code
+        let qrcode = new QRCode(document.getElementById("qrcode"), {
+            text: "upi://pay?pa=sanchitshelke6303@okhdfcbank&pn=DonationShop&am=0",
+            width: 128,
+            height: 128,
+            colorDark: "#000000",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.H
+        });
+
+        // Update date and time
+        function updateDateTime() {
+            const now = new Date();
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            };
+            dateTimeElement.textContent = now.toLocaleDateString('en-US', options);
+        }
+
+        // Set random shop name based on type
+        function setRandomShopName(shopType) {
+            const names = shopNamesByType[shopType];
+            const randomName = names[Math.floor(Math.random() * names.length)];
+            shopNameElement.textContent = randomName;
+        }
+
+        // Switch shop type
+        function switchShopType(shopType) {
+            currentShopType = shopType;
+            
+            // Update active button
+            shopTypeButtons.forEach(btn => {
+                if (btn.dataset.shop === shopType) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+            
+            // Set random shop name
+            setRandomShopName(shopType);
+            
+            // Clear product suggestion (if implemented)
+            // Update product suggestions based on shop type
+            
+            // Optionally, clear the current bill
+            clearBill();
+        }
+
+        // Add item to the table
+        function addItem() {
+            const name = productNameInput.value.trim();
+            const price = parseFloat(productPriceInput.value);
+            const quantity = parseInt(productQuantityInput.value);
+            
+            if (!name || isNaN(price) || isNaN(quantity) || price < 0 || quantity < 1) {
+                alert('Please enter valid product details');
+                return;
+            }
+            
+            const total = price * quantity;
+            
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${name}</td>
+                <td>${price.toFixed(2)}</td>
+                <td>${quantity}</td>
+                <td>${total.toFixed(2)}</td>
+            `;
+            
+            row.addEventListener('click', function() {
+                if (selectedRow) {
+                    selectedRow.classList.remove('selected-row');
+                }
+                selectedRow = this;
+                this.classList.add('selected-row');
+            });
+            
+            productTableBody.appendChild(row);
+            
+            // Clear inputs
+            productNameInput.value = '';
+            productPriceInput.value = '';
+            productQuantityInput.value = '1';
+            
+            // Update total
+            updateTotal();
+        }
+
+        // Delete selected item
+        function deleteItem() {
+            if (selectedRow) {
+                productTableBody.removeChild(selectedRow);
+                selectedRow = null;
+                updateTotal();
+            } else {
+                alert('Please select an item to delete');
+            }
+        }
+
+        // Update the total amount
+        function updateTotal() {
+            let total = 0;
+            const rows = productTableBody.querySelectorAll('tr');
+            
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                const rowTotal = parseFloat(cells[3].textContent);
+                total += rowTotal;
+            });
+            
+            totalAmountElement.textContent = `Rs ${total.toFixed(2)}`;
+            
+            // Update QR code with amount
+            updateQRCode(total);
+        }
+
+        // Update QR code with amount
+        function updateQRCode(amount) {
+            const upiString = `upi://pay?pa=sanchitshelke6303@okhdfcbank&pn=DonationShop&am=${amount.toFixed(2)}`;
+            qrcode.clear();
+            qrcode.makeCode(upiString);
+        }
+
+        // Show/hide QR code based on payment mode
+        function toggleQRSection() {
+            const paymentMode = paymentModeSelect.value;
+            if (paymentMode === 'upi') {
+                qrSection.style.display = 'block';
+            } else {
+                qrSection.style.display = 'none';
+            }
+        }
+
+        // Clear the bill
+        function clearBill() {
+            productTableBody.innerHTML = '';
+            document.getElementById('customerName').value = '';
+            document.getElementById('customerPhone').value = '';
+            document.getElementById('paymentMode').value = 'upi';
+            updateTotal();
+            selectedRow = null;
+            toggleQRSection();
+        }
+
+        // Save the bill
+        // Replace the saveBill function with this in index.html
+function saveBill() {
+    const customerName = document.getElementById('customerName').value.trim();
+    const customerPhone = document.getElementById('customerPhone').value.trim();
+    const paymentMode = document.getElementById('paymentMode').value;
+    
+    if (!customerName || !customerPhone) {
+        alert('Please enter donor details');
+        return;
+    }
+    
+    if (productTableBody.querySelectorAll('tr').length === 0) {
+        alert('Please add at least one item');
+        return;
+    }
+    
+    // Collect donation items
+    const donationItems = [];
+    const rows = productTableBody.querySelectorAll('tr');
+    
+    rows.forEach(row => {
+        const cells = row.querySelectorAll('td');
+        donationItems.push({
+            name: cells[0].textContent,
+            price: parseFloat(cells[1].textContent),
+            quantity: parseInt(cells[2].textContent),
+            total: parseFloat(cells[3].textContent)
+        });
+    });
+    
+    // Store donor details
+    const donorDetails = {
+        name: customerName,
+        phone: customerPhone,
+        paymentMode: paymentMode
+    };
+    
+    // Store data in localStorage
+    localStorage.setItem('donationItems', JSON.stringify(donationItems));
+    localStorage.setItem('donorDetails', JSON.stringify(donorDetails));
+    localStorage.setItem('totalAmount', totalAmountElement.textContent.replace('Rs ', ''));
+    localStorage.setItem('shopName', shopNameElement.textContent);
+    
+    alert('Donation receipt saved successfully! Proceed to shipping page to complete your donation.');
+    
+    // Optional: Redirect to shipping page
+    // window.location.href = 'ship.html';
+}
+
+// Replace the shippingButton click handler with this
+shippingButton.addEventListener('click', function() {
+    // First save the current donation details
+    saveBill();
+    // Then navigate to shipping page
+    window.location.href = 'ship.html';
+});
+
+        // Print the bill
+        function printBill() {
+            window.print();
+        }
+
+        // Toggle dark/light mode
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+        }
+        
+        // Redirect to shipping page
+        function goToShipping() {
+            window.location.href = 'ship.html';
+        }
+
+        // Event listeners
+        shopTypeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                switchShopType(button.dataset.shop);
+            });
+        });
+
+        addItemButton.addEventListener('click', addItem);
+        deleteItemButton.addEventListener('click', deleteItem);
+        saveBillButton.addEventListener('click', saveBill);
+        printBillButton.addEventListener('click', printBill);
+        newBillButton.addEventListener('click', clearBill);
+        themeToggle.addEventListener('change', toggleTheme);
+        paymentModeSelect.addEventListener('change', toggleQRSection);
+        shippingButton.addEventListener('click', goToShipping);
+
+        // Populate product dropdown when clicking on input
+        productNameInput.addEventListener('focus', () => {
+            // Create and show suggestions based on current shop type
+            const items = shopTypes[currentShopType];
+            if (items && items.length > 0) {
+                let datalist = document.getElementById('productSuggestions');
+                if (!datalist) {
+                    datalist = document.createElement('datalist');
+                    datalist.id = 'productSuggestions';
+                    document.body.appendChild(datalist);
+                    productNameInput.setAttribute('list', 'productSuggestions');
+                }
+                
+                datalist.innerHTML = '';
+                items.forEach(item => {
+                    const option = document.createElement('option');
+                    option.value = item.name;
+                    option.dataset.price = item.price;
+                    datalist.appendChild(option);
+                });
+            }
+        });
+
+        // Auto-fill price when selecting a product from suggestions
+        productNameInput.addEventListener('change', () => {
+            const selectedProduct = productNameInput.value;
+            const items = shopTypes[currentShopType];
+            const product = items.find(item => item.name === selectedProduct);
+            
+            if (product) {
+                productPriceInput.value = product.price;
+            }
+        });
+
+        // Initialize
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+        setRandomShopName(currentShopType);
+        toggleQRSection(); // Initial display setting for QR code section
+    </script>
+</body>
+</html>
